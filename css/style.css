@@ -15,7 +15,7 @@ h1 {
 }
 
 .container {
-    padding: 40px 0px;
+    padding: 20px 0px;
 }
 
 #select-level {
@@ -51,6 +51,8 @@ h1 {
     justify-content: center;
     align-items: center;
     font-weight: 700;
+    cursor: pointer;
+    user-select: none;
 }
 
 .click-on-box {
@@ -65,7 +67,7 @@ h1 {
 
 .overlay-lose {
     width: 500px;
-    height: 300px;
+    height: 200px;
     margin: auto;
     background-color: rgb(211, 41, 41);
     display: flex;
@@ -75,4 +77,25 @@ h1 {
     font-weight: 900;
     color: white;
     margin-top: 20px;
+}
+
+.stop-play {
+    width: 500px;
+    height: 500px;
+    margin: auto;
+    background-color: transparent;
+    position: absolute;
+}
+
+#score-panel {
+    width: 80px;
+    height: 50px;
+    color: red;
+    background-color: black;
+    font-size: 45px;
+    margin: auto;
+    text-align: center;
+    margin-bottom: 10px;
+    border: 1px solid red;
+    border-style: dashed;
 }

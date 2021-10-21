@@ -3,15 +3,17 @@ const selectLevel = document.getElementById("select-level");
 const btnStart = document.getElementById("btn-start");
 const squaresContainer = document.getElementById("squares-container");
 const overContainer = document.getElementById("over-container");
+let currentScore = document.getElementById("score-panel");
 
 let bombs = [];
+let punteggio = 0;
 
 // L'utente sceglie la difficoltà con il button
 btnStart.addEventListener("click", function ()
 {
     const level = selectLevel.value;
 
-    // in base alla difficoltà seleziona recupero le celle da creare
+    // in base alla difficoltà recupero le celle da creare
     const cells = cellsNumberXlevel(level);
 
     generateCells(cells);
@@ -20,6 +22,9 @@ btnStart.addEventListener("click", function ()
     bombs = generateNumBombs(16, cells);
 
     console.log('Le bombe sono qui: ' + bombs);
+
+    overContainer.innerHTML = "";
+    currentScore.innerHTML = (punteggio = 0);
 });
 
 // Funzione che mi dice quante celle servono per ogni livello
@@ -76,11 +81,22 @@ function onCellClick()
     // devo leggere prima l'array 
     const currentCellNumb = parseInt(this.textContent);
 
+    // Annullo il click sopra la cella già con la classe click.on.box
+    if (this.classList.contains("click-on-box")) {
+        return;
+    }
+
+    // Cambia la classe
     if (bombs.includes(currentCellNumb)) {
         this.classList.add("click-on-box-bomb");
         overContainer.innerHTML = `<div class="overlay-lose">Hai Perso!</div>`;
+        console.log(bombs);
+        squaresContainer.innerHTML += `<div class="stop-play"></div>`;
+        showBombs();
     } else {
         this.classList.add("click-on-box");
+        console.log(punteggio);
+        setScore();
     }
 };
 
@@ -113,4 +129,25 @@ function generateNumBombs(numBombs, numMaxRandom)
         }
     }
     return arrayBombs;
+}
+
+// Funzione per far comparire tutte le bombe
+function showBombs()
+{
+    // Recupero tutte le celle
+    const cellsList = squaresContainer.querySelectorAll(".box");
+    // Ciclo sull'array e recupero la bomba
+    for (let i = 0; i < bombs.length; i++) {
+        const bomba = bombs[i];
+        // La lista bomba parte da 1, la cellsList da 0 perchè è un array
+        const bombCell = cellsList[bomba - 1];
+        bombCell.classList.add("click-on-box-bomb");
+    }
+}
+
+// Funzione per settare il punteggio corrente
+function setScore()
+{
+    punteggio++;
+    currentScore.innerHTML = punteggio;
 }
